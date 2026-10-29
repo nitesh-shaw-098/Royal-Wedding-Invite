@@ -200,3 +200,127 @@ footer{text-align:center;border-top:1px solid #d9b66d25;padding:30px 20px 40px;c
     transition-duration: 0.2s;
   }
 }
+/* ==========================================
+   ROYAL WEDDING INTRO — VIDEO VERSION
+   Mobile + Desktop responsive
+   ========================================== */
+
+#royal-palace-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: #090d1a;
+
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+#royal-palace-intro.is-leaving {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Full-screen entrance video */
+#royal-palace-intro .palace-intro-video {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+  display: block;
+
+  object-fit: contain;
+  object-position: center;
+  background: #090d1a;
+}
+
+/* Hide old CSS palace artwork */
+#royal-palace-intro .palace-scene {
+  display: none;
+}
+
+#royal-palace-intro .palace-welcome {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+#royal-palace-intro .palace-welcome h2,
+#royal-palace-intro .palace-welcome p {
+  display: none;
+}
+
+/* Invisible clickable area over the printed button */
+#royal-palace-intro #royal-enter-button {
+  position: absolute;
+  z-index: 100000;
+
+  left: 50%;
+  top: 79%;
+  transform: translateX(-50%);
+
+  width: min(76%, 470px);
+  height: clamp(42px, 6.5vh, 76px);
+  min-height: 42px;
+
+  padding: 0;
+  border: 0;
+  border-radius: 60px;
+
+  background: transparent;
+  color: transparent;
+  font-size: 0;
+
+  cursor: pointer;
+  pointer-events: auto;
+  box-shadow: none;
+  animation: none;
+}
+
+/* Keyboard accessibility */
+#royal-palace-intro #royal-enter-button:focus-visible {
+  outline: 2px solid #f4dfaa;
+  outline-offset: 4px;
+}
+
+/* Smaller screens */
+@media (max-width: 480px) {
+  #royal-palace-intro .palace-intro-video {
+    object-fit: contain;
+  }
+
+  #royal-palace-intro #royal-enter-button {
+    top: 79%;
+    width: 76%;
+    height: 5.5%;
+    min-height: 38px;
+  }
+}
+
+/* Wide desktop screens */
+@media (min-width: 900px) {
+  #royal-palace-intro .palace-intro-video {
+    object-fit: contain;
+  }
+
+  #royal-palace-intro #royal-enter-button {
+    width: min(34%, 470px);
+    top: 79%;
+    height: 6%;
+  }
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  #royal-palace-intro {
+    transition-duration: 0.2s;
+  }
+}
