@@ -166,9 +166,9 @@
   </footer>
   <script src="config.js"></script>
   <script src="script.js"></script>
-
 <script>
 (() => {
+  // Avoid creating the entrance twice
   if (document.getElementById("royal-palace-intro")) return;
 
   const intro = document.createElement("section");
@@ -176,43 +176,71 @@
   intro.setAttribute("aria-label", "Royal wedding invitation entrance");
 
   intro.innerHTML = `
-    <div class="palace-scene" aria-hidden="true">
-      <div class="palace-halo"></div>
-      <div class="palace-arch">
-        <div class="palace-crown">♛</div>
-        <div class="palace-doorway">
-          <div class="palace-door left"></div>
-          <div class="palace-door right"></div>
-        </div>
-      </div>
-    </div>
-    <div class="palace-welcome">
-      <h2>Welcome to Our Royal Wedding</h2>
-      <p>A BEAUTIFUL BEGINNING · 9 DECEMBER 2026</p>
-      <button id="royal-enter-button" type="button">
-        ✨ ENTER WEDDING INVITATION ✨
-      </button>
-    </div>
+    <video
+      class="palace-intro-video"
+      autoplay
+      muted
+      playsinline
+      preload="auto"
+      aria-label="Royal wedding palace entrance"
+    >
+      <source src="./palace-entrance.mp4" type="video/mp4">
+    </video>
+
+    <button
+      id="royal-enter-button"
+      type="button"
+      aria-label="Enter wedding invitation"
+    >
+      Enter wedding invitation
+    </button>
   `;
 
   document.body.prepend(intro);
 
-  const enterButton = document.getElementById("royal-enter-button");
+  const video = intro.querySelector(".palace-intro-video");
+  const enterButton = intro.querySelector("#royal-enter-button");
+
+  let opened = false;
 
   function openInvitation() {
-    if (intro.classList.contains("is-open")) return;
+    if (opened) return;
+    opened = true;
 
-    intro.classList.add("is-open");
-    enterButton.disabled = true;
-    enterButton.textContent = "WELCOME ❤️";
+    video.pause();
+    intro.classList.add("is-leaving");
 
     window.setTimeout(() => {
-      intro.classList.add("is-leaving");
-      window.setTimeout(() => intro.remove(), 1100);
-    }, 1900);
+      intro.remove();
+
+      // Reveal the existing wedding page without breaking its features
+      window.scrollTo({ top: 0, behavior: "auto" });
+    }, 850);
   }
 
   enterButton.addEventListener("click", openInvitation);
+
+  // Keep the invitation accessible if video playback fails
+  video.addEventListener("error", () => {
+    intro.style.backgroundColor = "#090d1a";
+    enterButton.style.color = "#fff0b4";
+    enterButton.style.fontSize = "14px";
+    enterButton.style.border = "1px solid #d9b66d";
+    enterButton.style.background = "#10152a";
+    enterButton.textContent = "ENTER WEDDING INVITATION";
+  });
+
+  // Some browsers block autoplay; the invitation button remains usable
+  const playPromise = video.play();
+  if (playPromise && typeof playPromise.catch === "function") {
+    playPromise.catch(() => {
+      enterButton.style.color = "#fff0b4";
+      enterButton.style.fontSize = "14px";
+      enterButton.style.border = "1px solid #d9b66d";
+      enterButton.style.background = "#10152a";
+      enterButton.textContent = "ENTER WEDDING INVITATION";
+    });
+  }
 })();
 </script>
 </body>
