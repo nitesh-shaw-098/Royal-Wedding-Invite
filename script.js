@@ -8,6 +8,51 @@
   $("event-date").textContent = cfg.dateText || "Date to be announced";
   $("event-venue").textContent = [cfg.venueName, cfg.venueAddress].filter(Boolean).join(" · ") || "Venue details to be announced";
 
+  // Live wedding countdown
+  const countdownTarget = new Date(
+    cfg.dateISO
+  ).getTime();
+
+  const countdownDays = $("countdown-days");
+  const countdownHours = $("countdown-hours");
+  const countdownMinutes = $("countdown-minutes");
+  const countdownSeconds = $("countdown-seconds");
+  const countdownMessage = $("countdown-message");
+
+  function updateWeddingCountdown() {
+    const remaining = countdownTarget - Date.now();
+
+    if (!Number.isFinite(countdownTarget)) {
+      $("wedding-countdown").hidden = true;
+      return;
+    }
+
+    if (remaining <= 0) {
+      countdownDays.textContent = "00";
+      countdownHours.textContent = "00";
+      countdownMinutes.textContent = "00";
+      countdownSeconds.textContent = "00";
+      countdownMessage.textContent =
+        "The celebration day is here! ❤️";
+      return;
+    }
+
+    const totalSeconds = Math.floor(remaining / 1000);
+
+    const days = Math.floor(totalSeconds / 86400);
+    const hours = Math.floor((totalSeconds % 86400) / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+
+    countdownDays.textContent = String(days).padStart(2, "0");
+    countdownHours.textContent = String(hours).padStart(2, "0");
+    countdownMinutes.textContent = String(minutes).padStart(2, "0");
+    countdownSeconds.textContent = String(seconds).padStart(2, "0");
+  }
+
+  updateWeddingCountdown();
+  setInterval(updateWeddingCountdown, 1000);
+  
   if (cfg.googleMapsUrl && /^https:\/\/(www\.)?google\.[^/]+\/maps/.test(cfg.googleMapsUrl)) {
     $("maps-link").href = cfg.googleMapsUrl;
     $("maps-link").hidden = false;
