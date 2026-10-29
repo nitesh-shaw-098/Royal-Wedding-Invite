@@ -50,9 +50,18 @@
     countdownSeconds.textContent = String(seconds).padStart(2, "0");
   }
 
-  updateWeddingCountdown();
-  setInterval(updateWeddingCountdown, 1000);
   
+  console.log("Countdown target:", cfg.dateISO);
+  console.log("Countdown elements:", {
+    days: $("countdown-days"),
+    hours: $("countdown-hours"),
+    minutes: $("countdown-minutes"),
+    seconds: $("countdown-seconds")
+  });
+
+  updateWeddingCountdown();
+  window.setInterval(updateWeddingCountdown, 1000);
+
   if (cfg.googleMapsUrl && /^https:\/\/(www\.)?google\.[^/]+\/maps/.test(cfg.googleMapsUrl)) {
     $("maps-link").href = cfg.googleMapsUrl;
     $("maps-link").hidden = false;
