@@ -35,16 +35,11 @@
           <span class="envelope-shadow"></span>
           <span class="envelope-back"></span>
           <span class="envelope-letter">
-            <video
+  <img
+    src="assets/invitation-cover.jpg"
+    alt="Royal wedding invitation cover"
     class="cover-image"
-    autoplay
-    muted
-    loop
-    playsinline
-    preload="auto"
   >
-    <source src="assets/palace-entrance.mp4" type="video/mp4">
-            </video>
           </span>
           <span class="envelope-flap"></span>
           <span class="envelope-front"></span>
@@ -175,38 +170,6 @@
   </footer>
   <script src="config.js"></script>
   <script src="script.js"></script>
-<script>
-(() => {
-  if (document.getElementById("royal-palace-intro")) return;
 
-  const intro = document.createElement("section");
-  intro.id = "royal-palace-intro";
-
-  intro.innerHTML = `
-    <video
-      class="palace-intro-video"
-      autoplay
-      muted
-      playsinline
-      loop
-      preload="auto"
-    >
-      <source src="assets/palace-entrance.mp4" type="video/mp4">
-    </video>
-  `;
-
-  document.body.prepend(intro);
-
-  const video = intro.querySelector("video");
-
-  function closeIntro() {
-    intro.classList.add("is-leaving");
-    setTimeout(() => intro.remove(), 700);
-  }
-
-  video.addEventListener("click", closeIntro);
-  video.addEventListener("ended", closeIntro);
-})();
-</script>
 </body>
 </html>
