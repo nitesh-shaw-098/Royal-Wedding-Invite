@@ -334,3 +334,59 @@ footer{text-align:center;border-top:1px solid #d9b66d25;padding:30px 20px 40px;c
     transition-duration: 0.2s;
   }
 }
+/* ===== CINEMATIC PALACE BACKGROUND ===== */
+#royal-palace-intro {
+  background-color: #090d1a;
+  background-image: url("./palace-entrance.png");
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+#royal-palace-intro .palace-scene {
+  display: none;
+}
+
+/* Keep the image clean; use its built-in artwork */
+#royal-palace-intro .palace-welcome {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+#royal-palace-intro .palace-welcome h2,
+#royal-palace-intro .palace-welcome p {
+  display: none;
+}
+
+/* Invisible, tappable area over the illustrated button */
+#royal-enter-button {
+  position: absolute;
+  left: 50%;
+  bottom: 14%;
+  width: 74%;
+  height: 6%;
+  padding: 0;
+  transform: translateX(-50%);
+  border: 0;
+  border-radius: 40px;
+  background: transparent;
+  box-shadow: none;
+  color: transparent;
+  opacity: 0;
+  pointer-events: auto;
+}
+
+#royal-enter-button:active {
+  transform: translateX(-50%) scale(0.98);
+}
+
+@media (max-height: 650px) {
+  #royal-palace-intro {
+    background-position: center center;
+  }
+
+  #royal-enter-button {
+    bottom: 12%;
+  }
+}
