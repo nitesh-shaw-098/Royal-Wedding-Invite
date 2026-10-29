@@ -136,115 +136,201 @@ footer{text-align:center;border-top:1px solid #d9b66d25;padding:30px 20px 40px;c
 }
 
 
-/* ===== ROYAL WEDDING ENHANCEMENTS ===== */
-
-:root {
-  --royal-gold: #e7c77a;
-  --royal-gold-light: #fff0bd;
-  --royal-navy: #10172b;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  overflow-x: hidden;
-}
-
-button,
-a {
-  -webkit-tap-highlight-color: transparent;
-}
-
-button,
-.btn,
-a.btn {
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-button:active,
-.btn:active {
-  transform: scale(0.97);
-}
-
-/* Golden text effect */
-.royal-gold-text {
-  background: linear-gradient(
-    110deg,
-    #a77a30,
-    #fff0bd,
-    #d4a94f,
-    #fff7d9
-  );
-  background-size: 220% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: royalGoldShimmer 5s linear infinite;
-}
-
-@keyframes royalGoldShimmer {
-  to {
-    background-position: 220% center;
-  }
-}
-
-/* Floating golden particles */
-.royal-particle {
+/* ===== 3D ROYAL PALACE ENTRANCE ===== */
+#royal-palace-intro {
   position: fixed;
-  z-index: 5;
+  inset: 0;
+  z-index: 99999;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  perspective: 1200px;
+  background:
+    radial-gradient(ellipse at 50% 38%, #77532b 0%, #211a20 42%, #070b17 100%);
+  color: #fbe7ad;
+  transition: opacity 1s ease, visibility 1s ease;
+}
+
+#royal-palace-intro.is-leaving {
+  opacity: 0;
+  visibility: hidden;
   pointer-events: none;
-  color: var(--royal-gold-light);
-  text-shadow: 0 0 10px rgba(231, 199, 122, 0.8);
-  animation: royalFloat 7s linear forwards;
 }
 
-@keyframes royalFloat {
-  0% {
-    transform: translateY(0) rotate(0deg);
-    opacity: 0;
+.palace-scene {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  perspective: 1200px;
+}
+
+.palace-halo {
+  position: absolute;
+  width: min(90vw, 520px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #f4c76a;
+  filter: blur(85px);
+  opacity: 0.22;
+}
+
+.palace-arch {
+  position: relative;
+  width: min(78vw, 390px);
+  height: min(66vh, 510px);
+  min-height: 350px;
+  border: 8px solid #b88a42;
+  border-bottom: 0;
+  border-radius: 48% 48% 0 0 / 23% 23% 0 0;
+  background: linear-gradient(90deg, #39251b, #e4bd69 13%, #684527 22%, #271b1a 50%, #684527 78%, #e4bd69 87%, #39251b);
+  box-shadow: 0 0 24px #f2c66a66, inset 0 0 25px #100a10;
+}
+
+.palace-arch::before {
+  content: "";
+  position: absolute;
+  inset: 13px 13px 0;
+  border: 2px solid #f4d895;
+  border-bottom: 0;
+  border-radius: 48% 48% 0 0 / 23% 23% 0 0;
+  pointer-events: none;
+}
+
+.palace-doorway {
+  position: absolute;
+  inset: 42px 27px 0;
+  overflow: hidden;
+  display: flex;
+  perspective: 1000px;
+  background:
+    radial-gradient(ellipse at 50% 45%, #ffdf8b 0%, #a36c30 20%, #17121a 72%);
+  box-shadow: inset 0 0 45px #080610;
+}
+
+.palace-door {
+  position: relative;
+  width: 50%;
+  height: 100%;
+  border: 3px solid #e7c477;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 18px, #4c2c18 19px 22px),
+    linear-gradient(90deg, #68401f, #d1a451 18%, #7e4e25 38%, #c89b4b 52%, #59351e);
+  box-shadow: inset 0 0 15px #180e0a, 0 0 10px #f5ce76;
+  transition: transform 1.8s cubic-bezier(.7, 0, .2, 1);
+  transform-style: preserve-3d;
+}
+
+.palace-door::before {
+  content: "";
+  position: absolute;
+  inset: 12% 12%;
+  border: 2px solid #f3d58a;
+  box-shadow: inset 0 0 0 5px #7d5429;
+  background: linear-gradient(135deg, #b7863c55, #3b211b88);
+}
+
+.palace-door::after {
+  content: "✦";
+  position: absolute;
+  top: 45%;
+  color: #ffe9a4;
+  font-size: 30px;
+  text-shadow: 0 0 12px #ffe7a0;
+}
+
+.palace-door.left {
+  transform-origin: left center;
+}
+
+.palace-door.right {
+  transform-origin: right center;
+}
+
+.palace-door.left::after {
+  right: 12px;
+}
+
+.palace-door.right::after {
+  left: 12px;
+}
+
+#royal-palace-intro.is-open .palace-door.left {
+  transform: rotateY(-108deg);
+}
+
+#royal-palace-intro.is-open .palace-door.right {
+  transform: rotateY(108deg);
+}
+
+.palace-crown {
+  position: absolute;
+  z-index: 2;
+  top: -43px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: clamp(34px, 7vw, 54px);
+  color: #ffe4a0;
+  text-shadow: 0 0 20px #f4c76a;
+}
+
+.palace-welcome {
+  position: absolute;
+  z-index: 5;
+  left: 16px;
+  right: 16px;
+  bottom: max(35px, env(safe-area-inset-bottom));
+  text-align: center;
+}
+
+.palace-welcome h2 {
+  margin: 0 0 8px;
+  color: #ffdfa0;
+  font-family: Georgia, serif;
+  font-size: clamp(24px, 6vw, 38px);
+  font-weight: 400;
+  text-shadow: 0 2px 18px #000;
+}
+
+.palace-welcome p {
+  margin: 0 0 18px;
+  color: #fff0ce;
+  font-size: 13px;
+  letter-spacing: 2px;
+}
+
+#royal-enter-button {
+  border: 1px solid #ffe7ac;
+  border-radius: 30px;
+  padding: 14px 25px;
+  background: linear-gradient(135deg, #f8df9a, #b47c2d);
+  color: #25160b;
+  font-weight: bold;
+  font-size: 14px;
+  letter-spacing: 1px;
+  box-shadow: 0 0 25px #dca94c55;
+  cursor: pointer;
+}
+
+#royal-enter-button:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 4px;
+}
+
+@media (max-height: 600px) {
+  .palace-arch {
+    height: 55vh;
+    min-height: 260px;
   }
-  12% {
-    opacity: 0.8;
-  }
-  85% {
-    opacity: 0.7;
-  }
-  100% {
-    transform: translateY(-100vh) rotate(240deg);
-    opacity: 0;
+
+  .palace-welcome {
+    bottom: 12px;
   }
 }
 
-/* Wedding function cards */
-.function-card,
-.event-card {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-@media (hover: hover) {
-  .function-card:hover,
-  .event-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 32px rgba(212, 169, 79, 0.16);
-  }
-}
-
-/* Respect reduced-motion preferences */
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
-  .royal-gold-text,
-  .royal-particle {
-    animation: none;
-  }
-
-  *,
-  *::before,
-  *::after {
-    transition-duration: 0.01ms !important;
+  #royal-palace-intro,
+  .palace-door {
+    transition-duration: 0.2s;
   }
 }
