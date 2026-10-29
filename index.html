@@ -166,5 +166,54 @@
   </footer>
   <script src="config.js"></script>
   <script src="script.js"></script>
+
+<script>
+(() => {
+  if (document.getElementById("royal-palace-intro")) return;
+
+  const intro = document.createElement("section");
+  intro.id = "royal-palace-intro";
+  intro.setAttribute("aria-label", "Royal wedding invitation entrance");
+
+  intro.innerHTML = `
+    <div class="palace-scene" aria-hidden="true">
+      <div class="palace-halo"></div>
+      <div class="palace-arch">
+        <div class="palace-crown">♛</div>
+        <div class="palace-doorway">
+          <div class="palace-door left"></div>
+          <div class="palace-door right"></div>
+        </div>
+      </div>
+    </div>
+    <div class="palace-welcome">
+      <h2>Welcome to Our Royal Wedding</h2>
+      <p>A BEAUTIFUL BEGINNING · 9 DECEMBER 2026</p>
+      <button id="royal-enter-button" type="button">
+        ✨ ENTER WEDDING INVITATION ✨
+      </button>
+    </div>
+  `;
+
+  document.body.prepend(intro);
+
+  const enterButton = document.getElementById("royal-enter-button");
+
+  function openInvitation() {
+    if (intro.classList.contains("is-open")) return;
+
+    intro.classList.add("is-open");
+    enterButton.disabled = true;
+    enterButton.textContent = "WELCOME ❤️";
+
+    window.setTimeout(() => {
+      intro.classList.add("is-leaving");
+      window.setTimeout(() => intro.remove(), 1100);
+    }, 1900);
+  }
+
+  enterButton.addEventListener("click", openInvitation);
+})();
+</script>
 </body>
 </html>
