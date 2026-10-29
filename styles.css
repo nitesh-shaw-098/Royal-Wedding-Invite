@@ -1,3 +1,4 @@
+
 *{box-sizing:border-box}
 :root{--navy:#10152a;--navy2:#1c2039;--gold:#d9b66d;--gold2:#f4dfaa;--cream:#fff7e8;--muted:#c9c2b8;--ink:#292235}
 html{scroll-behavior:smooth}
@@ -25,8 +26,7 @@ h1{font-size:clamp(42px,10vw,72px);margin:20px 0 14px;color:var(--gold2)}
 .tap-hint{position:absolute;bottom:14px;font-size:10px;letter-spacing:.22em;color:var(--gold2);animation:pulse 1.8s infinite}
 .envelope-scene.opened .envelope-flap{transform:rotateX(180deg);z-index:1}
 .envelope-scene.opened .envelope-letter{transform:translateY(-105px) scale(1.05);z-index:5}
-.envelope-scene.opened .wax-seal{opacity:0}
-.envelope-scene.opened .tap-hint{opacity:0}
+.envelope-scene.opened .wax-seal,.envelope-scene.opened .tap-hint{opacity:0}
 .small-note{font-family:"Cormorant Garamond",serif;font-size:19px;color:#d7c5a0;font-style:italic}
 .invitation-content{max-width:680px;margin:0 auto;padding:20px 18px 70px;text-align:center;animation:rise .7s ease both}
 .invitation-content[hidden]{display:none}
@@ -43,7 +43,7 @@ video{display:block;width:100%;max-height:72vh;aspect-ratio:9/16;object-fit:cont
 .event-date{font-family:"Cormorant Garamond",serif;font-size:26px;margin:12px 0 5px;color:#553a25}
 .event-venue{color:#6f5b4b;line-height:1.6;font-size:14px}
 .functions-wrap{padding:22px 0}.function-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:20px}
-.function-card{padding:18px 12px;border:1px solid #d9b66d40;border-radius:12px;background:#ffffff05}
+.function-card{padding:18px 12px;border:1px solid #d9b66d40;border-radius:12px;background:#ffffff05;transition:transform .3s ease,box-shadow .3s ease}
 .function-icon{font-size:23px;color:var(--gold);margin-bottom:7px}.function-card h3{font-family:"Cormorant Garamond",serif;font-size:23px;font-weight:500;color:var(--gold2);margin:4px 0}
 .function-card p{font-size:12px;line-height:1.6;color:#cbc4c0;margin:4px 0}
 .rsvp-card{padding:28px 20px;text-align:left}
@@ -67,399 +67,48 @@ footer{text-align:center;border-top:1px solid #d9b66d25;padding:30px 20px 40px;c
 .footer-flower{color:var(--gold);font-size:25px}footer span{font-family:"Cormorant Garamond",serif;color:var(--gold2);font-size:20px}
 @keyframes pulse{0%,100%{opacity:.6}50%{opacity:1}}@keyframes twinkle{0%,100%{opacity:.4}50%{opacity:1}}@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 @media(min-width:700px){.hero{padding-top:70px}.envelope-scene{width:390px}.invitation-content{padding-top:30px}.rsvp-card{padding:36px}.function-list{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(hover:hover){.function-card:hover{transform:translateY(-5px);box-shadow:0 12px 32px #d4a94f29}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
-/* Wedding countdown design */
-.countdown {
-  max-width: 430px;
-  margin: 22px auto 18px;
-  padding: 20px 12px 15px;
-  border: 1px solid rgba(184, 138, 69, 0.45);
-  border-radius: 14px;
-  background: linear-gradient(135deg, #fff7e5, #f3dfb8);
-  box-shadow: 0 10px 28px rgba(122, 84, 32, 0.12);
-  text-align: center;
+
+/* Countdown */
+.countdown{max-width:430px;margin:22px auto 18px;padding:20px 12px 15px;border:1px solid #b88a4573;border-radius:14px;background:linear-gradient(135deg,#fff7e5,#f3dfb8);box-shadow:0 10px 28px #7a54201f;text-align:center}
+.countdown-heading{margin:0 0 14px;color:#91652c;font-size:10px;font-weight:700;letter-spacing:2px}
+.countdown-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.countdown-unit{padding:12px 3px 10px;border-radius:9px;background:#fffaf0;border:1px solid #d9b66d80}
+.countdown-unit span{display:block;color:#55371f;font-family:"Cormorant Garamond",serif;font-size:clamp(25px,7vw,38px);line-height:1.1;font-variant-numeric:tabular-nums}
+.countdown-unit small{display:block;margin-top:6px;color:#8b6a4b;font-size:9px;text-transform:uppercase;letter-spacing:1px}
+.countdown-message{margin:12px 0 0;color:#816344;font-size:12px}
+@media(max-width:360px){.countdown-grid{gap:5px}.countdown-unit span{font-size:25px}}
+
+/* Cinematic palace image intro */
+#royal-palace-intro{position:fixed;inset:0;z-index:99999;display:grid;place-items:center;overflow:hidden;background:#090d1a url("./palace-entrance.png") center center/cover no-repeat;color:#fbe7ad;transition:opacity 1s ease,visibility 1s ease}
+#royal-palace-intro.is-leaving{opacity:0;visibility:hidden;pointer-events:none}
+#royal-palace-intro .palace-scene{display:none}
+#royal-palace-intro .palace-welcome{position:absolute;inset:0;pointer-events:none}
+#royal-palace-intro .palace-welcome h2,#royal-palace-intro .palace-welcome p{display:none}
+
+/* Clickable overlay over the button printed in the image */
+#royal-palace-intro #royal-enter-button{
+  position:absolute;z-index:100000;left:50%;bottom:14%;
+  width:74%;height:6%;min-height:48px;padding:0;
+  transform:translateX(-50%);border:2px solid #fff0b4;border-radius:50px;
+  background:rgba(20,14,9,.28);color:transparent;font-size:0;
+  opacity:1;visibility:visible;overflow:hidden;pointer-events:auto;cursor:pointer;
+  box-shadow:0 0 12px #ffdc80,0 0 28px #ffbf47,0 0 48px #ffbf4780,inset 0 0 15px #ffdc804d;
+  animation:weddingGlow 1.5s ease-in-out infinite alternate;
 }
-
-.countdown-heading {
-  margin: 0 0 14px;
-  color: #91652c;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 2px;
+#royal-palace-intro #royal-enter-button::after{
+  content:"";position:absolute;top:-20%;left:-80%;width:45%;height:140%;
+  transform:skewX(-22deg);
+  background:linear-gradient(90deg,transparent,#fffde0d9,transparent);
+  animation:weddingShine 3s ease-in-out infinite;pointer-events:none;
 }
-
-.countdown-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 8px;
+@keyframes weddingGlow{
+  from{filter:brightness(1);box-shadow:0 0 10px #ffdc80,0 0 22px #ffbf47,inset 0 0 10px #ffdc8026}
+  to{filter:brightness(1.35);box-shadow:0 0 18px #fff0b4,0 0 35px #ffbf47,0 0 60px #ffbe3ce6,inset 0 0 20px #ffdc8066}
 }
-
-.countdown-unit {
-  padding: 12px 3px 10px;
-  border-radius: 9px;
-  background: #fffaf0;
-  border: 1px solid rgba(217, 182, 109, 0.5);
-}
-
-.countdown-unit span {
-  display: block;
-  color: #55371f;
-  font-family: "Cormorant Garamond", serif;
-  font-size: clamp(25px, 7vw, 38px);
-  line-height: 1.1;
-  font-variant-numeric: tabular-nums;
-}
-
-.countdown-unit small {
-  display: block;
-  margin-top: 6px;
-  color: #8b6a4b;
-  font-size: 9px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.countdown-message {
-  margin: 12px 0 0;
-  color: #816344;
-  font-size: 12px;
-}
-
-@media (max-width: 360px) {
-  .countdown-grid {
-    gap: 5px;
-  }
-
-  .countdown-unit span {
-    font-size: 25px;
-  }
-}
-
-
-/* ===== 3D ROYAL PALACE ENTRANCE ===== */
-#royal-palace-intro {
-  position: fixed;
-  inset: 0;
-  z-index: 99999;
-  display: grid;
-  place-items: center;
-  overflow: hidden;
-  perspective: 1200px;
-  background:
-    radial-gradient(ellipse at 50% 38%, #77532b 0%, #211a20 42%, #070b17 100%);
-  color: #fbe7ad;
-  transition: opacity 1s ease, visibility 1s ease;
-}
-
-#royal-palace-intro.is-leaving {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-
-.palace-scene {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  perspective: 1200px;
-}
-
-.palace-halo {
-  position: absolute;
-  width: min(90vw, 520px);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: #f4c76a;
-  filter: blur(85px);
-  opacity: 0.22;
-}
-
-.palace-arch {
-  position: relative;
-  width: min(78vw, 390px);
-  height: min(66vh, 510px);
-  min-height: 350px;
-  border: 8px solid #b88a42;
-  border-bottom: 0;
-  border-radius: 48% 48% 0 0 / 23% 23% 0 0;
-  background: linear-gradient(90deg, #39251b, #e4bd69 13%, #684527 22%, #271b1a 50%, #684527 78%, #e4bd69 87%, #39251b);
-  box-shadow: 0 0 24px #f2c66a66, inset 0 0 25px #100a10;
-}
-
-.palace-arch::before {
-  content: "";
-  position: absolute;
-  inset: 13px 13px 0;
-  border: 2px solid #f4d895;
-  border-bottom: 0;
-  border-radius: 48% 48% 0 0 / 23% 23% 0 0;
-  pointer-events: none;
-}
-
-.palace-doorway {
-  position: absolute;
-  inset: 42px 27px 0;
-  overflow: hidden;
-  display: flex;
-  perspective: 1000px;
-  background:
-    radial-gradient(ellipse at 50% 45%, #ffdf8b 0%, #a36c30 20%, #17121a 72%);
-  box-shadow: inset 0 0 45px #080610;
-}
-
-.palace-door {
-  position: relative;
-  width: 50%;
-  height: 100%;
-  border: 3px solid #e7c477;
-  background:
-    repeating-linear-gradient(90deg, transparent 0 18px, #4c2c18 19px 22px),
-    linear-gradient(90deg, #68401f, #d1a451 18%, #7e4e25 38%, #c89b4b 52%, #59351e);
-  box-shadow: inset 0 0 15px #180e0a, 0 0 10px #f5ce76;
-  transition: transform 1.8s cubic-bezier(.7, 0, .2, 1);
-  transform-style: preserve-3d;
-}
-
-.palace-door::before {
-  content: "";
-  position: absolute;
-  inset: 12% 12%;
-  border: 2px solid #f3d58a;
-  box-shadow: inset 0 0 0 5px #7d5429;
-  background: linear-gradient(135deg, #b7863c55, #3b211b88);
-}
-
-.palace-door::after {
-  content: "✦";
-  position: absolute;
-  top: 45%;
-  color: #ffe9a4;
-  font-size: 30px;
-  text-shadow: 0 0 12px #ffe7a0;
-}
-
-.palace-door.left {
-  transform-origin: left center;
-}
-
-.palace-door.right {
-  transform-origin: right center;
-}
-
-.palace-door.left::after {
-  right: 12px;
-}
-
-.palace-door.right::after {
-  left: 12px;
-}
-
-#royal-palace-intro.is-open .palace-door.left {
-  transform: rotateY(-108deg);
-}
-
-#royal-palace-intro.is-open .palace-door.right {
-  transform: rotateY(108deg);
-}
-
-.palace-crown {
-  position: absolute;
-  z-index: 2;
-  top: -43px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: clamp(34px, 7vw, 54px);
-  color: #ffe4a0;
-  text-shadow: 0 0 20px #f4c76a;
-}
-
-.palace-welcome {
-  position: absolute;
-  z-index: 5;
-  left: 16px;
-  right: 16px;
-  bottom: max(35px, env(safe-area-inset-bottom));
-  text-align: center;
-}
-
-.palace-welcome h2 {
-  margin: 0 0 8px;
-  color: #ffdfa0;
-  font-family: Georgia, serif;
-  font-size: clamp(24px, 6vw, 38px);
-  font-weight: 400;
-  text-shadow: 0 2px 18px #000;
-}
-
-.palace-welcome p {
-  margin: 0 0 18px;
-  color: #fff0ce;
-  font-size: 13px;
-  letter-spacing: 2px;
-}
-
-#royal-enter-button {
-  border: 1px solid #ffe7ac;
-  border-radius: 30px;
-  padding: 14px 25px;
-  background: linear-gradient(135deg, #f8df9a, #b47c2d);
-  color: #25160b;
-  font-weight: bold;
-  font-size: 14px;
-  letter-spacing: 1px;
-  box-shadow: 0 0 25px #dca94c55;
-  cursor: pointer;
-}
-
-#royal-enter-button:focus-visible {
-  outline: 3px solid white;
-  outline-offset: 4px;
-}
-
-@media (max-height: 600px) {
-  .palace-arch {
-    height: 55vh;
-    min-height: 260px;
-  }
-
-  .palace-welcome {
-    bottom: 12px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  #royal-palace-intro,
-  .palace-door {
-    transition-duration: 0.2s;
-  }
-}
-/* ===== CINEMATIC PALACE BACKGROUND ===== */
-#royal-palace-intro {
-  background-color: #090d1a;
-  background-image: url("./palace-entrance.png");
-  background-position: center center;
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-
-#royal-palace-intro .palace-scene {
-  display: none;
-}
-
-/* Keep the image clean; use its built-in artwork */
-#royal-palace-intro .palace-welcome {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-#royal-palace-intro .palace-welcome h2,
-#royal-palace-intro .palace-welcome p {
-  display: none;
-}
-
-/* Invisible, tappable area over the illustrated button */
-#royal-enter-button {
-  position: absolute;
-  left: 50%;
-  bottom: 14%;
-  width: 74%;
-  height: 6%;
-  padding: 0;
-  transform: translateX(-50%);
-  border: 0;
-  border-radius: 40px;
-  background: transparent;
-  box-shadow: none;
-  color: transparent;
-  opacity: 0;
-  pointer-events: auto;
-}
-
-#royal-enter-button:active {
-  transform: translateX(-50%) scale(0.98);
-}
-
-@media (max-height: 650px) {
-  #royal-palace-intro {
-    background-position: center center;
-  }
-
-  #royal-enter-button {
-    bottom: 12%;
-  }
-}
-
-/* ===== ROYAL INVITATION BUTTON GLOW ===== */
-
-#royal-enter-button {
-  opacity: 1 !important;
-  color: #ffe7a3 !important;
-  font-size: 0 !important;
-  pointer-events: auto !important;
-  overflow: hidden;
-  border: 2px solid #ffe8a6 !important;
-  background: rgba(27, 20, 14, 0.88) !important;
-  box-shadow:
-    0 0 12px rgba(255, 210, 105, 0.9),
-    0 0 28px rgba(255, 190, 75, 0.7),
-    inset 0 0 14px rgba(255, 209, 113, 0.25) !important;
-  animation: royalButtonPulse 1.8s ease-in-out infinite;
-  cursor: pointer;
-}
-
-/* Shine across the button */
-#royal-enter-button::after {
-  content: "";
-  position: absolute;
-  top: -20%;
-  left: -80%;
-  width: 45%;
-  height: 140%;
-  transform: skewX(-22deg);
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 225, 0.75),
-    transparent
-  );
-  animation: royalButtonShine 3s ease-in-out infinite;
-  pointer-events: none;
-}
-
-@keyframes royalButtonPulse {
-  0%, 100% {
-    box-shadow:
-      0 0 10px rgba(255, 210, 105, 0.65),
-      0 0 22px rgba(255, 190, 75, 0.35),
-      inset 0 0 10px rgba(255, 209, 113, 0.15);
-  }
-  50% {
-    box-shadow:
-      0 0 18px rgba(255, 225, 145, 1),
-      0 0 42px rgba(255, 190, 75, 0.85),
-      inset 0 0 20px rgba(255, 209, 113, 0.4);
-  }
-}
-
-@keyframes royalButtonShine {
-  0%, 20% {
-    left: -80%;
-  }
-  65%, 100% {
-    left: 140%;
-  }
-}
-
-#royal-enter-button:active {
-  transform: translateX(-50%) scale(0.96);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  #royal-enter-button,
-  #royal-enter-button::after {
-    animation: none !important;
-  }
-}
-
+@keyframes weddingShine{0%,20%{left:-80%}65%,100%{left:140%}}
+#royal-palace-intro #royal-enter-button:active{transform:translateX(-50%) scale(.96)}
+#royal-palace-intro #royal-enter-button:focus-visible{outline:3px solid #fff;outline-offset:5px}
+@media(max-height:650px){#royal-palace-intro{background-position:center center}#royal-palace-intro #royal-enter-button{bottom:12%}}
+@media(prefers-reduced-motion:reduce){#royal-palace-intro,#royal-palace-intro .palace-door{transition-duration:.2s}#royal-palace-intro #royal-enter-button,#royal-palace-intro #royal-enter-button::after{animation:none}}
