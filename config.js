@@ -15,6 +15,7 @@ window.WEDDING_CONFIG = {
   functions: [
     { name: "Haldi", icon: "🌼", date: "Monday, December 07, 2026", time: "07:00 PM", venue: "Hirodih, Giridih" },
     { name: "Mehendi & Sangeet", icon: "🌿", date: "Tuesday, December 08, 2026", time: "07:00 PM", venue: "Hirodih, Giridih" },
-    { name: "Wedding Ceremony", icon: "🪔", date: "Wednesday, December 09, 2026", time: "09:00 PM", venue: "Pihrah, Giridih" }
+    { name: "Wedding Ceremony", icon: "🪔", date: "Wednesday, December 09, 2026", time: "09:00 PM", venue: "Pihrah, Giridih" },
+    { name: "Wedding Party", icon: "🪩", date: "Friday, December 11, 2026", time: "07:00 PM", venue: "Hirodih, Giridih" }
   ]
 };
