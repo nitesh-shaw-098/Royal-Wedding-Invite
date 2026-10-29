@@ -177,12 +177,10 @@
   <script src="script.js"></script>
 <script>
 (() => {
-  // Avoid creating the entrance twice
   if (document.getElementById("royal-palace-intro")) return;
 
   const intro = document.createElement("section");
   intro.id = "royal-palace-intro";
-  intro.setAttribute("aria-label", "Royal wedding invitation entrance");
 
   intro.innerHTML = `
     <video
@@ -190,66 +188,24 @@
       autoplay
       muted
       playsinline
+      loop
       preload="auto"
-      aria-label="Royal wedding palace entrance"
     >
-      <source src="./palace-entrance.mp4" type="video/mp4">
+      <source src="assets/palace-entrance.mp4" type="video/mp4">
     </video>
-
-    <button
-      id="royal-enter-button"
-      type="button"
-      aria-label="Enter wedding invitation"
-    >
-      Enter wedding invitation
-    </button>
   `;
 
   document.body.prepend(intro);
 
-  const video = intro.querySelector(".palace-intro-video");
-  const enterButton = intro.querySelector("#royal-enter-button");
+  const video = intro.querySelector("video");
 
-  let opened = false;
-
-  function openInvitation() {
-    if (opened) return;
-    opened = true;
-
-    video.pause();
+  function closeIntro() {
     intro.classList.add("is-leaving");
-
-    window.setTimeout(() => {
-      intro.remove();
-
-      // Reveal the existing wedding page without breaking its features
-      window.scrollTo({ top: 0, behavior: "auto" });
-    }, 850);
+    setTimeout(() => intro.remove(), 700);
   }
 
-  enterButton.addEventListener("click", openInvitation);
-
-  // Keep the invitation accessible if video playback fails
-  video.addEventListener("error", () => {
-    intro.style.backgroundColor = "#090d1a";
-    enterButton.style.color = "#fff0b4";
-    enterButton.style.fontSize = "14px";
-    enterButton.style.border = "1px solid #d9b66d";
-    enterButton.style.background = "#10152a";
-    enterButton.textContent = "ENTER WEDDING INVITATION";
-  });
-
-  // Some browsers block autoplay; the invitation button remains usable
-  const playPromise = video.play();
-  if (playPromise && typeof playPromise.catch === "function") {
-    playPromise.catch(() => {
-      enterButton.style.color = "#fff0b4";
-      enterButton.style.fontSize = "14px";
-      enterButton.style.border = "1px solid #d9b66d";
-      enterButton.style.background = "#10152a";
-      enterButton.textContent = "ENTER WEDDING INVITATION";
-    });
-  }
+  video.addEventListener("click", closeIntro);
+  video.addEventListener("ended", closeIntro);
 })();
 </script>
 </body>
