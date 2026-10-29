@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#10152a">
+  <meta name="description" content="A royal wedding invitation. Open the envelope to view the invitation and RSVP.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="A Royal Wedding Invitation">
+  <meta property="og:description" content="With love, we invite you to celebrate our family wedding. Tap to open your invitation.">
+  <meta property="og:image" content="assets/invitation-cover.jpg">
+  <title>A Royal Wedding Invitation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="ambient-glow"></div>
+  <header class="topbar">
+    <div class="monogram" aria-hidden="true">✦</div>
+    <div class="topbar-label">A FAMILY CELEBRATION</div>
+    <div class="topbar-flourish" aria-hidden="true">✧</div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="eyebrow"><span></span> YOU ARE CORDIALLY INVITED <span></span></div>
+      <h1 id="couple-title">A beautiful beginning</h1>
+      <p class="hero-copy">With joyful hearts, our family invites you to be part of a celebration filled with love, blessings and forever memories.</p>
+
+      <div class="envelope-scene" id="envelope-scene">
+        <div class="sparkles" aria-hidden="true">✦　·　✧　·　✦</div>
+        <button class="envelope" id="open-envelope" type="button" aria-label="Open your wedding invitation">
+          <span class="envelope-shadow"></span>
+          <span class="envelope-back"></span>
+          <span class="envelope-letter">
+            <img src="assets/invitation-cover.jpg" alt="Royal wedding invitation cover" class="cover-image">
+          </span>
+          <span class="envelope-flap"></span>
+          <span class="envelope-front"></span>
+          <span class="wax-seal">✦</span>
+        </button>
+        <p class="tap-hint" id="tap-hint">TAP TO OPEN YOUR INVITATION</p>
+      </div>
+      <p class="small-note">A little invitation, a lifetime of memories.</p>
+    </section>
+
+    <section class="invitation-content" id="invitation-content" hidden>
+      <div class="section-kicker">THE CELEBRATION</div>
+      <h2>Our invitation, from the heart</h2>
+      <p class="section-copy">We would be honoured by your presence and blessings on our special day.</p>
+
+      <div class="video-card">
+        <div class="video-frame">
+          <video id="wedding-video" controls playsinline preload="metadata" poster="assets/invitation-cover.jpg">
+            <source src="assets/wedding-invitation.mp4" type="video/mp4">
+            Your browser does not support embedded video. Please use the download link below.
+          </video>
+        </div>
+        <p class="video-caption">A royal invitation made with love</p>
+        <a class="text-link" href="assets/wedding-invitation.mp4" download>Download invitation video ↗</a>
+      </div>
+
+      <div class="details-card">
+        <div class="ornament">❦</div>
+        <div class="section-kicker">SAVE THE DATE</div>
+        <h2 id="event-title">The Wedding Celebration</h2>
+        <p id="event-date" class="event-date">Date to be announced</p>
+        <p id="event-venue" class="event-venue">Venue details to be announced</p>
+        <a id="maps-link" class="button button-outline" href="#" target="_blank" rel="noopener" hidden>Open venue in Google Maps</a>
+      </div>
+
+      <div class="functions-wrap">
+        <div class="section-kicker">WEDDING FESTIVITIES</div>
+        <h2>Celebrate with us</h2>
+        <div id="functions-list" class="function-list"></div>
+      </div>
+
+      <section class="rsvp-card" id="rsvp">
+        <div class="ornament">✧</div>
+        <div class="section-kicker">KINDLY REPLY</div>
+        <h2>Will you join us?</h2>
+        <p class="section-copy">Your presence would mean the world to us. Please let us know below.</p>
+        <form id="rsvp-form" method="post" target="rsvp-frame">
+          <label for="guest-name">Your name</label>
+          <input id="guest-name" name="guestName" autocomplete="name" placeholder="Enter your full name" required maxlength="100">
+
+          <label for="attendance">Will you be attending?</label>
+          <select id="attendance" name="attendance" required>
+            <option value="">Choose an answer</option>
+            <option value="Attending">Joyfully attending</option>
+            <option value="Not attending">Sorry, unable to attend</option>
+          </select>
+
+          <label for="guest-count">Number of people attending</label>
+          <select id="guest-count" name="guestCount" required>
+            <option value="1">1 person</option>
+            <option value="2">2 people</option>
+            <option value="3">3 people</option>
+            <option value="4">4 people</option>
+            <option value="5">5 people</option>
+            <option value="6+">6 or more</option>
+          </select>
+
+          <label for="function-choice">Which event(s)? (optional)</label>
+          <select id="function-choice" name="functionChoice">
+            <option value="All functions">All functions</option>
+            <option value="Haldi">Haldi</option>
+            <option value="Mehendi & Sangeet">Mehendi &amp; Sangeet</option>
+            <option value="Wedding">Wedding</option>
+          </select>
+
+          <label for="guest-message">A message for the family (optional)</label>
+          <textarea id="guest-message" name="message" rows="3" placeholder="Write a blessing or message…" maxlength="500"></textarea>
+          <input type="hidden" name="eventName" value="Family Wedding">
+          <button class="button button-gold submit-button" type="submit">Send my RSVP <span>✦</span></button>
+          <p class="form-status" id="form-status" role="status">RSVP responses are collected only after the Google Sheet is connected by the organiser.</p>
+        </form>
+        <iframe name="rsvp-frame" id="rsvp-frame" title="RSVP submission response" class="hidden-frame"></iframe>
+      </section>
+
+      <div class="share-card">
+        <h2>Share the joy</h2>
+        <p>Invite someone else to celebrate with us.</p>
+        <button class="button button-outline" id="share-whatsapp" type="button">Share on WhatsApp ↗</button>
+        <button class="text-button" id="copy-link" type="button">Copy invitation link</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-flower">✿</div>
+    <p>Made with love, for a beautiful beginning.</p>
+    <span id="footer-names">A family celebration</span>
+  </footer>
+  <script src="config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
