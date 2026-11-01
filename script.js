@@ -61,7 +61,103 @@
 
   updateWeddingCountdown();
   window.setInterval(updateWeddingCountdown, 1000);
+// Scratch-to-reveal countdown
+const scratchCanvas = $("scratch-canvas");
+const countdownBox = $("wedding-countdown");
 
+if (scratchCanvas && countdownBox) {
+  const ctx = scratchCanvas.getContext("2d");
+  let isScratching = false;
+  let revealed = false;
+
+  function setupScratchCard() {
+    const rect = countdownBox.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+
+    scratchCanvas.width = rect.width * dpr;
+    scratchCanvas.height = rect.height * dpr;
+
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    const gradient = ctx.createLinearGradient(
+      0, 0, rect.width, rect.height
+    );
+
+    gradient.addColorStop(0, "#f8e8bb");
+    gradient.addColorStop(0.5, "#c49a52");
+    gradient.addColorStop(1, "#f4dfad");
+
+    ctx.globalCompositeOperation = "source-over";
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, rect.width, rect.height);
+
+    ctx.fillStyle = "#68451f";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.font = "bold 13px Georgia";
+    ctx.fillText(
+      "✦ SCRATCH TO REVEAL ✦",
+      rect.width / 2,
+      rect.height / 2 - 8
+    );
+
+    ctx.font = "11px Georgia";
+    ctx.fillText(
+      "Reveal our special day",
+      rect.width / 2,
+      rect.height / 2 + 14
+    );
+  }
+
+  function scratch(e) {
+    if (!isScratching || revealed) return;
+
+    const rect = scratchCanvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    ctx.globalCompositeOperation = "destination-out";
+    ctx.beginPath();
+    ctx.arc(x, y, 22, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Reveal when most of the coating has been scratched
+    const pixels = ctx.getImageData(
+      0, 0, scratchCanvas.width, scratchCanvas.height
+    ).data;
+
+    let transparent = 0;
+    const total = pixels.length / 4;
+
+    for (let i = 3; i < pixels.length; i += 4) {
+      if (pixels[i] === 0) transparent++;
+    }
+
+    if (transparent / total > 0.45) {
+      revealed = true;
+      scratchCanvas.classList.add("scratched");
+    }
+  }
+
+  scratchCanvas.addEventListener("pointerdown", (e) => {
+    isScratching = true;
+    scratchCanvas.setPointerCapture(e.pointerId);
+    scratch(e);
+  });
+
+  scratchCanvas.addEventListener("pointermove", scratch);
+
+  ["pointerup", "pointercancel"].forEach(event => {
+    scratchCanvas.addEventListener(event, () => {
+      isScratching = false;
+    });
+  });
+
+  setupScratchCard();
+  window.addEventListener("resize", () => {
+    if (!revealed) setupScratchCard();
+  });
+}
   if (cfg.googleMapsUrl && /^https:\/\/(www\.)?google\.[^/]+\/maps/.test(cfg.googleMapsUrl)) {
     $("maps-link").href = cfg.googleMapsUrl;
     $("maps-link").hidden = false;
