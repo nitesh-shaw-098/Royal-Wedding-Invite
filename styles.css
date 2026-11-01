@@ -352,3 +352,26 @@ footer{text-align:center;border-top:1px solid #d9b66d25;padding:30px 20px 40px;c
   object-position: center;
   display: block;
 }
+/* Scratch Card Countdown */
+#wedding-countdown {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+#scratch-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  cursor: crosshair;
+  touch-action: none;
+  border-radius: inherit;
+}
+
+#scratch-canvas.scratched {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
